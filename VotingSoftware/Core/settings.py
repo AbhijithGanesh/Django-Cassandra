@@ -51,15 +51,22 @@ TEMPLATES = [
 ASGI_APPLICATION = "Core.asgi.application"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+     'default': {
+         'ENGINE': 'django_cassandra_engine',
+         'NAME': 'cassandra',
+         'TEST_NAME': 'djassandra',
+         'HOST': 'localhost',
+         'PORT':'9042',
+         'OPTIONS': {
+             'replication': {
+                 'strategy_class': 'SimpleStrategy',
+                 'replication_factor': 1
+             }
+         }
+     }
+ }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
