@@ -12,7 +12,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    'django_cassandra_engine',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,16 +48,45 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = "Core.asgi.application"
+WSGI_APPLICATION = "Core.wsgi.application"
+
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-     'default':{
+    'default':{
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR  /  "db.sqlite3"
+     },
+     'production':{
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '<db_name>',
+        'USER': '<db_username>',
+        'PASSWORD': '<password>',
+        'HOST': '<db_hostname_or_ip>',
+        'PORT': '<db_port>',
+     },
+     'cassandra': {
+         'ENGINE': 'django_cassandra_engine',
+         'NAME': 'test',
+         'TEST_NAME': 'djassandra',
+         'USER': 'cassandra',
+         'PASSWORD':'cassandra',
+         'HOST': 'localhost',
+         'PORT':'9042',
+         'OPTIONS': {
+             'replication': {
+                 'strategy_class': 'SimpleStrategy',
+                 'replication_factor': 1
+             }
+         }
      }
- }
+}
 
 
+# Password validation
+# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
